@@ -1,5 +1,5 @@
 {
-  "name": "samrt-water-frontend",
+  "name": "smart-water-platform",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,12 +9,18 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@vueuse/core": "^14.2.0",
+    "axios": "^1.13.4",
+    "echarts": "^6.0.0",
+    "element-plus": "^2.13.2",
     "pinia": "^3.0.4",
     "vue": "^3.5.27",
     "vue-router": "^5.0.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.3",
+    "sass": "^1.97.3",
     "vite": "^7.3.1",
     "vite-plugin-vue-devtools": "^8.0.5"
   },
