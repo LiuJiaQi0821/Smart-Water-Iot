@@ -18,7 +18,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:8080',
+        target: 'http://118.178.179.231:8080',
         changeOrigin: true
         // rewrite removed to keep /api prefix since backend expects it
       }
