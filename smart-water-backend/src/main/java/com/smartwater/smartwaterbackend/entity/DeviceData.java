@@ -19,4 +19,6 @@ public class DeviceData {
     private Integer battery;
     private BigDecimal leakRisk;
     private LocalDateTime recordTime;
+    private Double voltage;
+    private Integer signalStrength;
 }

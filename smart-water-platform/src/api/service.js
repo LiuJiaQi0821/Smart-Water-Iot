@@ -1,30 +1,47 @@
-// 模拟后端返回的数据
+import axios from 'axios';
+
+// 创建 axios 实例
+const request = axios.create({
+  baseURL: '/api', // 对应后端控制器的 RequestMapping 公共前缀
+  timeout: 10000
+});
+
+// 响应拦截器：统一处理后端返回的格式
+request.interceptors.response.use(
+  (response) => {
+    return response.data;
+  },
+  (error) => {
+    console.error('API 请求错误:', error);
+    return Promise.reject(error);
+  }
+);
+
 export default {
-  // ① 登录
+  // ① 登录 - 对应 AuthController.login
   login(data) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (data.username === 'admin') resolve({ code: 200, role: 'admin', name: '管理员' })
-        else resolve({ code: 200, role: 'user', name: '普通用户' })
-      }, 500)
-    })
+    return request.post('/auth/login', data);
   },
-  // ③ & ⑥ 监测数据
-  getMonitorData() {
-    return Promise.resolve({
-      // (4) 15分钟级时序数据
-      times: ['10:00', '10:15', '10:30', '10:45', '11:00', '11:15'],
-      flowRates: [2.5, 3.1, 4.2, 2.8, 3.5, 2.9],
-      totalUsage: [120, 125, 132, 138, 145, 150],
-      leakRisk: 85, // (5) 深度学习模型计算出的漏损风险
-      device: { voltage: '3.7V', signal: '-82dBm', pressure: '0.45MPa' }
-    })
+  
+  // ② 注册 - 对应 AuthController.register
+  register(data) {
+    return request.post('/auth/register', data);
   },
-  // ④ 决策建议
+
+  // ③ 获取监测数据 - 对应 MonitorController.search
+  getMonitorData(params) {
+    // 后端返回 IPage 结构，包含 records 列表
+    return request.get('/monitor/search', { params });
+  },
+
+  // ④ 获取决策建议/日志 - 对应 AdminController.list
   getDecisions() {
-    return Promise.resolve([
-      { id: 1, level: 'high', title: 'DMA-03区 管网滴漏预警', suggestion: '检测到持续微小流量，建议立即检修阀门 A-12。' },
-      { id: 2, level: 'low', title: '设备低电量', suggestion: '终端 8901 电池电压低于 3.5V。' }
-    ])
+    // 后端返回 List<DecisionLog>
+    return request.get('/admin/decisions');
+  },
+
+  // ⑤ 上传设备数据 - 对应 MonitorController.upload
+  uploadData(data) {
+    return request.post('/monitor/upload', data);
   }
 }
