@@ -48,7 +48,10 @@ if %errorlevel% equ 0 (
     echo   [SUCCESS] 上传成功！
     echo   提交信息: %FINAL_MSG%
     echo ===========================================
-    timeout /t 3
 ) else (
-    pause
+    echo   [ERROR] 上传过程中出现错误。
 )
+
+echo.
+echo 任务已完成，请按任意键退出...
+pause >nul
