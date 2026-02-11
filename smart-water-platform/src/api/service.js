@@ -43,5 +43,10 @@ export default {
   // ⑤ 上传设备数据 - 对应 MonitorController.upload
   uploadData(data) {
     return request.post('/monitor/upload', data);
+  },
+
+  // ⑥ 获取用户列表 - 管理员功能
+  getUsers() {
+    return request.get('/admin/users');
   }
 }
