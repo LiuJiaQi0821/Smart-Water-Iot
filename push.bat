@@ -33,7 +33,6 @@ if "%USER_DESC%"=="" (
     )
 )
 
-:: 更新版本号文件
 if "%USER_DESC%"=="" echo %V1%.%V2%.%V3% > %VERSION_FILE%
 
 echo.
@@ -47,7 +46,6 @@ git push origin main
 if %errorlevel% equ 0 (
     echo ===========================================
     echo   [SUCCESS] 上传成功！
-    :: 修复后的显示行，确保文字和变量之间逻辑清晰
     echo   提交备注信息为: !FINAL_MSG!
     echo ===========================================
 ) else (
@@ -56,5 +54,5 @@ if %errorlevel% equ 0 (
 )
 
 echo.
-echo 任务已完成，请按任意键退出...
+echo 请按任意键退出...
 pause >nul
