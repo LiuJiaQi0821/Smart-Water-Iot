@@ -46,7 +46,6 @@ git push origin main
 if %errorlevel% equ 0 (
     echo ===========================================
     echo   [SUCCESS] 上传成功！
-    echo   提交备注信息为: !FINAL_MSG!
     echo ===========================================
 ) else (
     echo.
