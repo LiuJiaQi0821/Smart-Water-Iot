@@ -26,19 +26,20 @@ if "%USER_DESC%"=="" (
     set "FINAL_MSG=%NEXT_VER%"
 ) else (
     echo %USER_DESC% | findstr /R "^V[0-9]" >nul
-    if %errorlevel% equ 0 (
+    if !errorlevel! equ 0 (
         set "FINAL_MSG=%USER_DESC%"
     ) else (
         set "FINAL_MSG=%NEXT_VER% %USER_DESC%"
     )
 )
 
+:: 更新版本号文件
 if "%USER_DESC%"=="" echo %V1%.%V2%.%V3% > %VERSION_FILE%
 
 echo.
-echo [1/2] 正在提交: "%FINAL_MSG%"
+echo [1/2] 正在提交: "!FINAL_MSG!"
 git add .
-git commit -m "%FINAL_MSG%"
+git commit -m "!FINAL_MSG!"
 
 echo [2/2] 正在推送至 GitHub...
 git push origin main
@@ -46,10 +47,12 @@ git push origin main
 if %errorlevel% equ 0 (
     echo ===========================================
     echo   [SUCCESS] 上传成功！
-    echo   提交信息: %FINAL_MSG%
+    :: 修复后的显示行，确保文字和变量之间逻辑清晰
+    echo   提交备注信息为: !FINAL_MSG!
     echo ===========================================
 ) else (
-    echo   [ERROR] 上传过程中出现错误。
+    echo.
+    echo   [ERROR] 上传失败，请检查网络或 Git 冲突。
 )
 
 echo.
